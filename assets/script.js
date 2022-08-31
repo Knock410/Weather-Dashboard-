@@ -1,4 +1,4 @@
-var requestUrl = "https://api.openweathermap.org/data/2.5/weather?lat=40.6576&lon=-73.5832&appid=d730384eadcace798781efeee25eace8"
+//var requestUrl = "https://api.openweathermap.org/data/2.5/weather?lat=40.6576&lon=-73.5832&appid=d730384eadcace798781efeee25eace8"
 // var requestCity = "http://api.openweathermap.org/geo/1.0/direct?q=Freeport&appid=d730384eadcace798781efeee25eace8"
 // var APIKey = "d730384eadcace798781efeee25eace8";
 var cityInput = document.querySelector(".city-input");
@@ -10,7 +10,16 @@ button.addEventListener("click", function(){
 
     fetch(requestCity).then(function(response){
         response.json().then(function(data){
-            console.log(data);
+            console.log(data); 
+              
+            var requestUrl = "https://api.openweathermap.org/data/2.5/weather?lat="+data[0].lat+"&lon="+data[0].lon+"&appid=d730384eadcace798781efeee25eace8"
+            fetch(requestUrl).then(function(response){
+                response.json().then(function(data){
+                    console.log(data);
+                    debugger
+                }); 
+        });
+            
         }); 
 });
 
@@ -20,7 +29,7 @@ button.addEventListener("click", function(){
 //    fetch(requestUrl).then(function(response){
 //         response.json().then(function(data){
 //             console.log(data);
-// //         }); 
+//         }); 
 // });
 //    fetch(requestCity).then(function(response){
 //         response.json().then(function(data){
