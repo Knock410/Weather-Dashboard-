@@ -10,21 +10,34 @@ button.addEventListener("click", function(){
 
     fetch(requestCity).then(function(response){
         response.json().then(function(data){
-            console.log(data);  
+            console.log(data);
+            //displayWeather(data);  
               
             var requestUrl = "https://api.openweathermap.org/data/2.5/weather?lat="+data[0].lat+"&lon="+data[0].lon+"&appid=d730384eadcace798781efeee25eace8"
             fetch(requestUrl).then(function(response){
                 response.json().then(function(data){
-                    console.log(data); //Change this to diplay in HTML as innerHTML or text content on selected div
+                    //console.log(data); //Change this to diplay in HTML as innerHTML or text content on selected div
                     //debugger
+                    displayWeather(data);
                 }); 
-        });
-            
-        }); 
+        });             
+        });  
+           
+        
 });
 
 })
 
+//Function to display data to page 
+var displayWeather = function(data) {
+    const {name} = data;
+    const {icon,description}= data.weather[0];
+    const {temp, humidity} = data.main;
+    const {speed} =data.wind;
+    console.log(data);
+    document.querySelector(".city").textContent=name;
+
+};
 
 //    fetch(requestUrl).then(function(response){
 //         response.json().then(function(data){
