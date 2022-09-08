@@ -59,7 +59,7 @@ var displayWeather = function (data) {
 
   console.log(data);
   document.querySelector(".city").textContent = name;
-  document.querySelector(".icon").src = icon; 
+  document.querySelector("#wicon").src =  "http://openweathermap.org/img/w/" + icon + ".png"; 
   document.querySelector(".desc").textConetent = description;
   document.querySelector(".temp ").textContent = " Temp: " + temp + " K ";
   document.querySelector(".humidity").textContent =
