@@ -3,10 +3,11 @@
 // var APIKey = "d730384eadcace798781efeee25eace8";
 var cityInput = document.querySelector(".city-input");
 var searchButton = document.querySelector(".btn");
-var currentDate = document.querySelector(".date");
+
 //debugger //debugs everthing before it and can be tested in console.
 searchButton.addEventListener("click", function () {
-  //currentDate.text(moment().format('MMMM Do YYYY, h:mm:ss a'));
+ var currentDate = document.querySelector(".date");
+   currentDate.innerHTML = moment().format('MMMM Do YYYY, h:mm:ss a');
   var cityInput = document.querySelector(".city-input");
   var requestCity =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
@@ -28,6 +29,7 @@ searchButton.addEventListener("click", function () {
           //console.log(data); //Change this to diplay in HTML as innerHTML or text content on selected div
           //debugger
           displayWeather(data);
+          
         });
 
         var requestUV =
@@ -51,23 +53,24 @@ searchButton.addEventListener("click", function () {
 //Function to display data to page
 var displayWeather = function (data) {
   const { name } = data;
-  const { icon, description } = data.weather[0];
+  const { icon,description } = data.weather[0];
   const { temp, humidity } = data.main;
   const { speed } = data.wind;
 
   console.log(data);
   document.querySelector(".city").textContent = name;
-
-  document.querySelector(".temp").textContent = temp;
+  document.querySelector(".icon").src = icon; 
+  document.querySelector(".desc").textConetent = description;
+  document.querySelector(".temp ").textContent = " Temp: " + temp + " K ";
   document.querySelector(".humidity").textContent =
-    "Humidity:" + humidity + "%";
+    " Humidity:" + humidity + " % ";
   document.querySelector(".wind").textContent =
-    " Wind speed " + speed + " km/h ";
+    " Wind speed: " + speed + " km/h ";
   
 };
 
 var displayUV = function (data) {
 const {value} = data[0];
-document.querySelector(".uv").textContent = value;
+document.querySelector(".uv").textContent = " UV " + " Index: " + value;
  }
 
