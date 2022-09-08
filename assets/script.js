@@ -2,9 +2,11 @@
 // var requestCity = "http://api.openweathermap.org/geo/1.0/direct?q=Freeport&appid=d730384eadcace798781efeee25eace8"
 // var APIKey = "d730384eadcace798781efeee25eace8";
 var cityInput = document.querySelector(".city-input");
-var button = document.querySelector(".btn");
+var searchButton = document.querySelector(".btn");
+var currentDate = document.querySelector(".date");
 //debugger //debugs everthing before it and can be tested in console.
-button.addEventListener("click", function () {
+searchButton.addEventListener("click", function () {
+  //currentDate.text(moment().format('MMMM Do YYYY, h:mm:ss a'));
   var cityInput = document.querySelector(".city-input");
   var requestCity =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
@@ -36,8 +38,9 @@ button.addEventListener("click", function () {
           "&appid=d730384eadcace798781efeee25eace8";
         fetch(requestUV).then(function (response) {
           response.json().then(function (data) {
-            displayUV(data);
-            
+             displayUV(data);
+            console.log(data);
+            //localStorage.setItem("search", JSON.stringify));
           });
         });
       });
@@ -54,14 +57,17 @@ var displayWeather = function (data) {
 
   console.log(data);
   document.querySelector(".city").textContent = name;
-  document.querySelector(".date").textContent = speed;
+
   document.querySelector(".temp").textContent = temp;
   document.querySelector(".humidity").textContent =
     "Humidity:" + humidity + "%";
   document.querySelector(".wind").textContent =
     " Wind speed " + speed + " km/h ";
-  document.querySelector(".uv").textContent = lat;
+  
 };
 
-var displayUV= 
+var displayUV = function (data) {
+const {value} = data[0];
+document.querySelector(".uv").textContent = value;
+ }
 
