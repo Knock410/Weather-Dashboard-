@@ -17,15 +17,12 @@
       crossorigin="anonymous"
     />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"/
-    rel="stylesheet"
-    />
-    <link href = "assets/style.css"
-    rel ="stylesheet"
-    />
+    rel="stylesheet" />
+    <link href="assets/style.css" rel="stylesheet" />
   </head>
   <body class="body-image">
     <h1>Weather Dashboard</h1>
-
+ <main class = "container">
     <div class="input-group input-group-lg position-relative">
       <span class="input-group-text" id="inputGroup-sizing-lg">Weather</span>
       <input
@@ -38,19 +35,9 @@
       <button type="button" class="btn btn-primary btn-lg">Search</button>
     </div>
     <br />
-   <div class="container bg-info text-white card">
-    <div class="weather">
-      <h2 class="city"></h2>
-      <div class ="date"></div>
-      <div class="temp"></div>
-      <div class="icon"><img id="wicon" src="" alt=""></div>
-      <div class ="desc"> </div> 
-      <div class="humidity"></div>
-      <div class="wind"></div>
-      <div class="uv"></div>
-    </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <div id="Wdiv" class="bg-info text-white row"></div>
+  </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="assets\script.js"></script>
   </body>
 </html>
