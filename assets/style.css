@@ -1,3 +1,20 @@
-/* .body-image {
-background-image: url("https://api.unsplash.com/GET /photos/random?query=city&client_id=8e2USOQ4ULDZuqzq3y0iKcM76fEuwW3Dbm4qQeQtTSU");
-} */
+.low {
+    color:rgb(218, 218, 170);
+    
+}
+
+.mod{
+    color:rgb(15, 190, 15);
+}
+
+.high {
+    color: yellow;
+}
+
+.Vhigh {
+    color: rgb(224, 90, 41);
+}
+
+.Xhigh {
+    color: rgb(153, 21, 21);
+}
