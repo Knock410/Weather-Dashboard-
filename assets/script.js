@@ -1,13 +1,11 @@
-//var requestUrl = "https://api.openweathermap.org/data/2.5/weather?lat=40.6576&lon=-73.5832&appid=d730384eadcace798781efeee25eace8"
-// var requestCity = "http://api.openweathermap.org/geo/1.0/direct?q=Freeport&appid=d730384eadcace798781efeee25eace8"
-// var APIKey = "d730384eadcace798781efeee25eace8";
+//Declaring Variables 
 var cityInput = document.querySelector(".city-input");
 var searchButton = document.querySelector(".btn");
 
-//debugger //debugs everthing before it and can be tested in console.
+//Search button event listener linked to function that fetches api, captures and displays data
 searchButton.addEventListener("click", function () {
   var currentDate = document.querySelector(".date");
-
+//APi for City name 
   var cityInput = document.querySelector(".city-input");
   var requestCity =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
@@ -17,20 +15,10 @@ searchButton.addEventListener("click", function () {
   fetch(requestCity).then(function (response) {
     response.json().then(function (data) {
       console.log(data);
+      debugger
 
-      //   var requestWeather =
-      //     "https://api.openweathermap.org/data/2.5/weather?lat=" +
-      //     data[0].lat +
-      //     "&lon=" +
-      //     data[0].lon +
-      //     "&appid=d730384eadcace798781efeee25eace8";
-      //   fetch(requestWeather).then(function (response) {
-      //     response.json().then(function (data) {
-      //       //console.log(data); //Change this to diplay in HTML as innerHTML or text content on selected div
-      //       //debugger
-      // //       displayWeather(data);
-      //     });
-
+      
+//APi for UV 
       var requestUV =
         "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" +
         data[0].lat +
@@ -39,7 +27,7 @@ searchButton.addEventListener("click", function () {
         "&appid=d730384eadcace798781efeee25eace8";
       fetch(requestUV).then(function (response) {
         response.json().then(function (data) {
-          displayUV(data);
+          // displayUV(data);
           console.log(data);
           //localStorage.setItem("search", JSON.stringify));
 
@@ -53,6 +41,8 @@ searchButton.addEventListener("click", function () {
           fetch(fiveDayFor).then(function (response) {
             response.json().then(function (data) {
               console.log(data);
+              var Wdiv = document.querySelector("#Wdiv");
+              Wdiv.innerHTML = ""
               const weatherList = data.list;
               for (let i = 0; i < weatherList.length; i += 8) {
                 displayWeather(weatherList[i]);
@@ -75,52 +65,64 @@ var displayWeather = function (data) {
   const { speed } = data.wind;
 
   console.log(data);
-  document.querySelector(".date").textContent = dt_txt;
-  document.querySelector(".city").textContent = name;
-  document.querySelector("#wicon").src =
-    "http://openweathermap.org/img/w/" + icon + ".png";
-  document.querySelector(".desc").textConetent = description;
-  document.querySelector(".temp ").textContent = " Temp: " + temp + " K ";
-  document.querySelector(".humidity").textContent =
-    " Humidity:" + humidity + " % ";
-  document.querySelector(".wind").textContent =
-    " Wind speed: " + speed + " km/h ";
-  //dynamically creating divs for the weather forecast data
-  var forecast = document.createElement("div").classList.add("weather");
-  var city = document.createElement("h2").classList.add("city");
-  //    var forecastOne = document.createElement("div").classList.add("weather")
-  //    var forecastOne = document.createElement("div").classList.add("weather")
-  //    var forecastOne = document.createElement("div").classList.add("weather")
-  //    var city = document.createElement("h2")
+//Declaring variables to display city input
+  var cityInput = document.querySelector(".city-input");
+   document.querySelector(".city").textContent = cityInput.value;
+ 
 
-  forecast.getElementById("Wdiv").appendChild(city);
+  var Wdiv = document.querySelector("#Wdiv");
+  
+  var main = document.createElement("div");
+  main.classList.add("weather", "col", "card","bg-info");
+   
+//Creates html elemetns and appends them 
+  var date = document.createElement("div");
+  date.classList.add("date", "panel");
+  date.textContent = dt_txt;
+  var temper = document.createElement("div");
+  temper.classList.add("temp", "panel");
+  temper.textContent = " Temp: " + temp + " K ";
+  var iccon = document.createElement("img", "panel");
+  iccon.id = "wicon";
+  iccon.setAttribute("src", "");
+  iccon.src = "http://openweathermap.org/img/w/" + icon + ".png";
+  var desc = document.createElement("div");
+  desc.classList.add("desc", "panel");
+  desc.textConetent = description;
+  var humid = document.createElement("div");
+  humid.classList.add("humidty", "panel");
+  humid.textContent = " Humidity:" + humidity + " % ";
+  var wind = document.createElement("div");
+  wind.classList.add("wind", "panel");
+  wind.textContent = " Wind speed: " + speed + " km/h ";
+  var uv = document.createElement("div");
+  uv.classList.add("uv");
+  Wdiv.appendChild(main);
+  main.appendChild(iccon);
+  main.appendChild(humid);
+  main.appendChild(date);
+  main.appendChild(temper);
+  main.appendChild(desc);
+  main.appendChild(wind);
 
-  //    <div class="weather">
-  //       <h2 class="city"></h2>
-  //       <div class ="date"></div>
-  //       <div class="temp"></div>
-  //       <div class="icon"><img id="wicon" src="" alt=""></div>
-  //       <div class ="desc"> </div>
-  //       <div class="humidity"></div>
-  //       <div class="wind"></div>
-  //       <div class="uv"></div>
+  
 };
-
+//Function that changes the UV color
 var displayUV = function (data) {
   const { value } = data[0];
 
-  document.querySelector(".uv").textContent = " UV " + " Index: " + value;
-  var uV = document.querySelector(".uv");
+  uv.textContent = " UV " + " Index: " + value;
+
   //Changes Index Color based off of value
   if (value <= 2) {
-    uV.classList.add("low");
+    uv.classList.add("low");
   } else if (value >= 3 && value <= 5) {
     uV.classList.add("mod");
   } else if (value >= 6 && value <= 7) {
-    uV.classList.add("high");
+    uv.classList.add("high");
   } else if (value >= 8 && value <= 10) {
-    uV.classList.add("Vhigh");
+    uv.classList.add("Vhigh");
   } else {
-    uV.classList.add("Xhigh");
+    uv.classList.add("Xhigh");
   }
 };

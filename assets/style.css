@@ -1,3 +1,10 @@
+.panel { 
+    width: fit-content;
+    margin:0;
+}
+
+
+
 .low {
     color:rgb(218, 218, 170);
     
