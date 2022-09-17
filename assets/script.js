@@ -1,12 +1,42 @@
-//Declaring Variables 
+//Declaring Variables
 var cityInput = document.querySelector(".city-input");
 var searchButton = document.querySelector(".btn");
+
+function saveToLocalStorage(cityName) {
+  var cities = [];
+  if (localStorage.getItem("cities")) {
+    // push a new value to array
+    cities = JSON.parse(localStorage.getItem("cities"));
+  }
+  cities.push(cityName);
+  localStorage.setItem("cities", JSON.stringify(cities));
+}
+
+//local storage function 
+if (localStorage.getItem("cities")) {
+  var cities = JSON.parse(localStorage.getItem("cities"));
+  for (let index = 0; index < cities.length; index++) {
+    const cityName = cities[index];
+    // create a button
+    var btn = document.createElement('button')
+    btn.innerHTML = cityName
+
+    // append that button
+    document.getElementById("history").appendChild(btn);
+  }
+}
 
 //Search button event listener linked to function that fetches api, captures and displays data
 searchButton.addEventListener("click", function () {
   var currentDate = document.querySelector(".date");
-//APi for City name 
+  //APi for City name
   var cityInput = document.querySelector(".city-input");
+  saveToLocalStorage(cityInput.value);
+  var btn = document.createElement('button')
+  btn.innerHTML = cityInput.value
+  btn.addEventListener
+  // append that button
+  document.getElementById("history").appendChild(btn);
   var requestCity =
     "http://api.openweathermap.org/geo/1.0/direct?q=" +
     cityInput.value +
@@ -15,10 +45,9 @@ searchButton.addEventListener("click", function () {
   fetch(requestCity).then(function (response) {
     response.json().then(function (data) {
       console.log(data);
-      debugger
+      //debugger;
 
-      
-//APi for UV 
+      //APi for UV
       var requestUV =
         "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" +
         data[0].lat +
@@ -26,9 +55,9 @@ searchButton.addEventListener("click", function () {
         data[0].lon +
         "&appid=d730384eadcace798781efeee25eace8";
       fetch(requestUV).then(function (response) {
-        response.json().then(function (data) {
+        response.json().then(function (uvData) {
           // displayUV(data);
-          console.log(data);
+          console.log("uvz", uvData);
           //localStorage.setItem("search", JSON.stringify));
 
           //5 day api forecast
@@ -42,10 +71,11 @@ searchButton.addEventListener("click", function () {
             response.json().then(function (data) {
               console.log(data);
               var Wdiv = document.querySelector("#Wdiv");
-              Wdiv.innerHTML = ""
+              Wdiv.innerHTML = "";
               const weatherList = data.list;
               for (let i = 0; i < weatherList.length; i += 8) {
-                displayWeather(weatherList[i]);
+                debugger;
+                displayWeather(weatherList[i], uvData[i / 8]);
               }
             });
           });
@@ -57,7 +87,7 @@ searchButton.addEventListener("click", function () {
 // });
 
 //Function to display data to page
-var displayWeather = function (data) {
+var displayWeather = function (data, uvData) {
   const { name } = data;
   const { dt_txt } = data;
   const { icon, description } = data.weather[0];
@@ -65,17 +95,16 @@ var displayWeather = function (data) {
   const { speed } = data.wind;
 
   console.log(data);
-//Declaring variables to display city input
+  //Declaring variables to display city input
   var cityInput = document.querySelector(".city-input");
-   document.querySelector(".city").textContent = cityInput.value;
- 
+  document.querySelector(".city").textContent = cityInput.value;
 
   var Wdiv = document.querySelector("#Wdiv");
-  
+
   var main = document.createElement("div");
-  main.classList.add("weather", "col", "card","bg-info");
-   
-//Creates html elemetns and appends them 
+  main.classList.add("weather", "col", "card", "bg-info");
+
+  //Creates html elemetns and appends them
   var date = document.createElement("div");
   date.classList.add("date", "panel");
   date.textContent = dt_txt;
@@ -95,8 +124,7 @@ var displayWeather = function (data) {
   var wind = document.createElement("div");
   wind.classList.add("wind", "panel");
   wind.textContent = " Wind speed: " + speed + " km/h ";
-  var uv = document.createElement("div");
-  uv.classList.add("uv");
+  var uv = displayUV(uvData);
   Wdiv.appendChild(main);
   main.appendChild(iccon);
   main.appendChild(humid);
@@ -104,12 +132,14 @@ var displayWeather = function (data) {
   main.appendChild(temper);
   main.appendChild(desc);
   main.appendChild(wind);
-
-  
+  main.appendChild(uv);
 };
 //Function that changes the UV color
 var displayUV = function (data) {
-  const { value } = data[0];
+  const { value } = data;
+
+  var uv = document.createElement("div");
+  uv.classList.add("uv");
 
   uv.textContent = " UV " + " Index: " + value;
 
@@ -125,4 +155,5 @@ var displayUV = function (data) {
   } else {
     uv.classList.add("Xhigh");
   }
+  return uv;
 };
