@@ -38,7 +38,7 @@ searchButton.addEventListener("click", function () {
   // append that button
   document.getElementById("history").appendChild(btn);
   var requestCity =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     cityInput.value +
     "&appid=d730384eadcace798781efeee25eace8";
 
