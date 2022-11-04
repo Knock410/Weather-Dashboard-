@@ -74,7 +74,7 @@ searchButton.addEventListener("click", function () {
               Wdiv.innerHTML = "";
               const weatherList = data.list;
               for (let i = 0; i < weatherList.length; i += 8) {
-                debugger;
+              
                 displayWeather(weatherList[i], uvData[i / 8]);
               }
             });
