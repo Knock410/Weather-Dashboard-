@@ -114,7 +114,7 @@ var displayWeather = function (data, uvData) {
   var iccon = document.createElement("img", "panel");
   iccon.id = "wicon";
   iccon.setAttribute("src", "");
-  iccon.src = "http://openweathermap.org/img/w/" + icon + ".png";
+  iccon.src = "https://openweathermap.org/img/w/" + icon + ".png";
   var desc = document.createElement("div");
   desc.classList.add("desc", "panel");
   desc.textConetent = description;
